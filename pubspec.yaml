@@ -42,11 +42,35 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_secure_storage: ^8.0.0
   shimmer_animation: ^2.1.0+1
+  flutter_staggered_grid_view: ^0.6.2
+  flutter_spinkit: ^5.2.0
+
+
 
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
+
+  #A package which simplifies the task of updating your Flutter app's launcher icon.
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_icons:
+  android: true
+  image_path: "assets/png/mainLogo.png"
+  adaptive_icon_background: "assets/png/background.png"
+  adaptive_icon_foreground: "assets/png/mainLogo.png"
+
+
+
+
+
+
+
+
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

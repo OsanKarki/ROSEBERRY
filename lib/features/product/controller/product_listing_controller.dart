@@ -5,18 +5,17 @@ import 'package:get/get.dart';
 
 import '../repository/product_repository.dart';
 
-class ProductDetailsController extends GetxController {
+class ProductListingController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
   }
 
-  Either<NetworkException,ProductModel>? result;
+  Either<NetworkException, List<ProductModel>>? result;
 
   Future<void> getProductInfo(FilterQueryParams filterQueryParams) async {
-    result = await ProductRepository().getProductDetails(filterQueryParams: filterQueryParams);
+    result = await ProductRepository().getProductList(filterQueryParams: filterQueryParams);
 
     update();
   }

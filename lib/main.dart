@@ -13,8 +13,9 @@ class EcommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.bottomNavigationBar,
+      initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.routes,
     );
   }
