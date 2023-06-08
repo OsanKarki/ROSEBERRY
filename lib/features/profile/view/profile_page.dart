@@ -2,7 +2,6 @@ import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../core/widgets/error_view.dart';
 import '../../auth/view/controller/auth_status_checker_controller.dart';
 import 'controller/widgets/account_menu_item.dart';
@@ -18,6 +17,13 @@ class ProfilePage extends StatelessWidget {
             'My Account',
             style: TextStyle(fontSize: 20),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.find<AuthStatusController>().logout();
+                },
+                icon: Icon(Icons.logout))
+          ],
           backgroundColor: kGreen600,
         ),
         body: GetBuilder<PersonalInfoController>(
@@ -94,6 +100,7 @@ class ProfilePage extends StatelessWidget {
                                   style: const TextStyle(
                                       fontSize: 17, color: kGreen600),
                                 ),
+
                               ],
                             ),
                           ),
@@ -108,64 +115,50 @@ class ProfilePage extends StatelessWidget {
                                   height: 40,
                                 );
                                 return Column(
-                                  children:  [
+                                  children: [
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                      onTap: () {},
                                       icon: Icons.book_outlined,
                                       title: 'Address book',
                                     ),
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                      onTap: () {},
                                       title: 'Order History',
                                       icon: Icons.access_time,
                                     ),
                                     menuSpacing,
                                     AccountMenuItem(
-                                       onTap:  (){
-
-                                        },
+                                        onTap: () {},
                                         title: 'Terms and Condition',
                                         icon: Icons.sticky_note_2_outlined),
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                      onTap: () {},
                                       title: 'Privacy and Cookie Policy',
                                       icon: Icons.note,
                                     ),
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                        onTap: () {},
                                         title: 'About Us',
                                         icon: Icons.info_outline),
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                      onTap: () {},
                                       title: 'Contact Us',
                                       icon: Icons.phone_outlined,
                                     ),
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: (){
-
-                                      },
+                                        onTap: () {},
                                         title: 'Help & FAQs',
                                         icon: Icons.help_center_outlined),
                                     menuSpacing,
-
                                     AccountMenuItem(
-                                      onTap: (){
-                                        Get.find<AuthStatusController>().logout();
+                                      onTap: () {
+                                        Get.find<AuthStatusController>()
+                                            .logout();
                                       },
                                       title: 'Logout',
                                       icon: Icons.logout,

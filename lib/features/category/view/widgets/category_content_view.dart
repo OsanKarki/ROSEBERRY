@@ -51,7 +51,7 @@ class CategoryContentView extends StatelessWidget {
                               title: GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.productListingPage,
-                                      arguments: childCategoryModel?.id);
+                                      arguments: FilterQueryParams(categoryId: childCategoryModel?.id));
                                 },
                                 child: Text("${childCategoryModel?.name}"),
                               ),
@@ -62,7 +62,7 @@ class CategoryContentView extends StatelessWidget {
                     ),
                     Divider(
                       color: Colors.grey.shade300,
-                      thickness: 1,
+                      thickness: 1.5,
                     )
                   ],
                 ),

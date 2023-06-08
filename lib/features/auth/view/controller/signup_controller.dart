@@ -8,8 +8,7 @@ import '../../repository/auth_repository.dart';
 class SignupController extends GetxController {
   Either<NetworkException, String>? result;
 
-  Future<void> signupRegister(
-      BuildContext context, SignupRequestModel signupRequestModel) async {
+  Future<void> signupRegister(BuildContext context, SignupRequestModel signupRequestModel) async {
     showDialog(
       context: context,
       barrierDismissible: false,

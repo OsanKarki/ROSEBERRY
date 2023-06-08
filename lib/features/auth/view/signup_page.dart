@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:ecommerce_app/features/auth/model/signup_request_model.dart';
 import 'package:ecommerce_app/features/auth/view/controller/signup_controller.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +188,9 @@ class _SignupPageState extends State<SignupPage> {
                           children: [
                             const Text("Already a member?"),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.loginPage);
+                                },
                                 child: const Text(
                                   'SignIn',
                                   style: TextStyle(color: kGreen400),

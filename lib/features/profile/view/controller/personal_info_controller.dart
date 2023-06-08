@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/profile/model/profile_personal_info_model.dart';
-import 'package:ecommerce_app/features/profile/repository/profile_personal_info_repository.dart';
+import 'package:ecommerce_app/features/profile/repository/profile_repository.dart';
 import 'package:get/get.dart';
 
 class PersonalInfoController extends GetxController {

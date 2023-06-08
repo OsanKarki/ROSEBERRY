@@ -9,7 +9,7 @@ class PrimaryBoxShimmerEffect extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height:155 ,
-      width: 120,
+      width: 100,
       color: Colors.grey.shade200,
     );
   }

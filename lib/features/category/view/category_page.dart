@@ -24,16 +24,16 @@ class _CategoryPageState extends State<CategoryPage> {
           backgroundColor: kGreen600,
           elevation: 0,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
+            preferredSize: const Size.fromHeight(20),
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 25),
+                padding: const EdgeInsets.only(bottom: 20,top:5 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       height: 50,
-                      width: 340,
+                      width: 300,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),

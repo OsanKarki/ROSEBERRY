@@ -33,16 +33,16 @@ class _ProductListingPageState extends State<ProductListingPage> {
           elevation: 0,
           automaticallyImplyLeading: false,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
+            preferredSize: const Size.fromHeight(19),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       height: 50,
-                      width: 340,
+                      width: 310,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -118,7 +118,7 @@ class _ProductListingPageState extends State<ProductListingPage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Center(
-                                        child: Image.network("${productList[index].image}",
+                                        child: Image.network("${productList[index].image}",height: 150,
 
                                             ),
                                       ),

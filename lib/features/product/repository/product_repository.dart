@@ -7,8 +7,7 @@ import 'package:ecommerce_app/features/product/model/product_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ProductRepository {
-  Future<Either<NetworkException, List<ProductModel>>>
-      getTopRatedProduct() async {
+  Future<Either<NetworkException, List<ProductModel>>> getTopRatedProduct() async {
     final dio = Dio();
     dio.interceptors.add(PrettyDioLogger());
 

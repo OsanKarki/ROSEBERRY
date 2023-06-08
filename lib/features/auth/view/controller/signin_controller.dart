@@ -4,8 +4,6 @@ import 'package:ecommerce_app/features/auth/view/controller/auth_status_checker_
 import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../model/signup_request_model.dart';
 import '../../repository/auth_repository.dart';
 
 class SignInController extends GetxController {

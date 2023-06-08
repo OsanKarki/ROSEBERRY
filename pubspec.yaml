@@ -46,6 +46,10 @@ dependencies:
   flutter_spinkit: ^5.2.0
 
 
+  #Approximate how your Flutter app looks and performs on another device.
+  device_preview: ^1.1.0
+
+
 
 
 dev_dependencies:

@@ -2,7 +2,6 @@ import 'package:ecommerce_app/features/auth/view/controller/auth_status_checker_
 import 'package:ecommerce_app/features/shared/auth_middleware_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../cart/view/cart_page.dart';
 import '../category/view/category_page.dart';
 import '../home/view/home_page.dart';
@@ -20,7 +19,7 @@ class _BottonNavigationBarState extends State<BottonNavigationBar> {
   final screens = [
     const HomePage(),
     const CategoryPage(),
-    const CartPage(),
+    Obx(() => Get.find<AuthStatusController>().isAuthenticated.value? const CartPage():AuthMiddlewarePage()),
     Obx(() =>Get.find<AuthStatusController>().isAuthenticated.value? const ProfilePage(): const AuthMiddlewarePage()),
 
   ];

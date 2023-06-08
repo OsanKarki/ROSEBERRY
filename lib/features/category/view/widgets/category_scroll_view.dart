@@ -42,28 +42,13 @@ class _CategoryScrollViewState extends State<CategoryScrollView> {
               color: isSelected ? Colors.white : Colors.grey.shade300,
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: kGreen400,
-                        child: Text(
-                          category.name![0],
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      GestureDetector(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.grey,
-                            size: 20,
-                          ))
-                    ],
+                  CircleAvatar(
+                    backgroundColor: kGreen400,
+                    child: Text(
+                      category.name![0],
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600),
+                    ),
                   ),
                   const SizedBox(
                     height: 5,

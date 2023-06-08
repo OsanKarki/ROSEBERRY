@@ -8,8 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class AuthRepository {
-  Future<Either<NetworkException, String>> register(
-      SignupRequestModel signupRequestModel) async {
+  Future<Either<NetworkException, String>> register(SignupRequestModel signupRequestModel) async {
     final dio = Dio();
     dio.interceptors.add(PrettyDioLogger(
         responseBody: true,
@@ -22,7 +21,6 @@ class AuthRepository {
       final response = await dio.post("/rest/V1/customer/register",
           data: signupRequestModel.toJson());
       final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
 
       return right(data[0]["message"]);
     } catch (e) {
@@ -48,9 +46,7 @@ class AuthRepository {
       final response = await dio.post("/rest/V1/customer/login",
           data: signInRequestModel.toJson());
       final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
-      const FlutterSecureStorage()
-          .write(key: "ACCESS_TOKEN", value: data[0]["token"]);
+      const FlutterSecureStorage().write(key: "ACCESS_TOKEN", value: data[0]["token"]);
 
       return right(data[0]["message"]);
     } catch (e) {
