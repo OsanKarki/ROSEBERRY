@@ -3,7 +3,7 @@ import 'package:ecommerce_app/features/auth/bindings/signin_bindings.dart';
 import 'package:ecommerce_app/features/auth/bindings/signup_bindings.dart';
 import 'package:ecommerce_app/features/auth/view/login_page.dart';
 import 'package:ecommerce_app/features/auth/view/signup_page.dart';
-import 'package:ecommerce_app/features/bnb/bottom_navigation_bar.dart';
+import 'package:ecommerce_app/features/bnb/view/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/features/cart/bindings/card_bindings.dart';
 import 'package:ecommerce_app/features/category/bindings/category_bindings.dart';
 import 'package:ecommerce_app/features/home/bindings/home_bindings.dart';

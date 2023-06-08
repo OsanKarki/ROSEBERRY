@@ -9,14 +9,14 @@ class CartDetailsModel {
 
   CartDetailsModel(
       {this.itemCount,
-        this.grandTotal,
+      this.grandTotal,
       this.subTotal,
       this.subTotalDiscounted,
       this.cartItemsModel});
 
   factory CartDetailsModel.fromJson(Map<String, dynamic> json) {
     return CartDetailsModel(
-      itemCount: json['items_count'],
+        itemCount: json['items_count'],
         grandTotal: json['grand_total'],
         subTotal: json['subtotal'],
         subTotalDiscounted: json['subtotal_with_discount'],

@@ -43,10 +43,16 @@ class CartRepository {
       final response = await dio.get('/rest/V1/cart');
 
       final data = response.data;
-      final cartList = data[0]["cart"];
-
-      final cartModelList = CartDetailsModel.fromJson(cartList);
-      return right(cartModelList);
+      print("@@@@@@@@@");
+      print(response.data);
+      if (data != null) {
+        final cartList = data[0]["cart"];
+        final cartModelList = CartDetailsModel.fromJson(cartList);
+        return right(cartModelList);
+      } else {
+        // Return an empty CartDetailsModel instance or any other default value
+        return right(CartDetailsModel());
+      }
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
         return left(NetworkException("No Internet Connection"));

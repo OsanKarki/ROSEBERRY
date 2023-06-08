@@ -4,6 +4,8 @@ import 'package:ecommerce_app/features/cart/repository/cart_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'get_to_cart_controller.dart';
+
 
 class CartController extends GetxController {
   Either<NetworkException, String>? result;
@@ -35,6 +37,7 @@ class CartController extends GetxController {
         Get.showSnackbar(snackBar);
       },
       (r) {
+        Get.find<GetCartController>().getCartInfo();
         final snackBar = GetSnackBar(
           message: r,
           // Snackbar message
