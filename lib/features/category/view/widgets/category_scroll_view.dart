@@ -56,10 +56,7 @@ class _CategoryScrollViewState extends State<CategoryScrollView> {
                   Text(
                     "${category.name}",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: kGreen600),
+                      style: Theme.of(context).textTheme.bodyMedium
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/presentation/resources/app_colors.dart';
 import '../../../../core/presentation/routes/routes.dart';
 import '../../model/product_model.dart';
 
@@ -40,8 +41,9 @@ class ProductCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                 child: Text(
+                  textAlign: TextAlign.center,
                   "${product.description}",
-                  style: const TextStyle(color: Colors.white),
+                  style:  Theme.of(context).textTheme.bodyLarge?.apply(color: Colors.white,)
                 ),
               ),
             ),

@@ -14,6 +14,7 @@ class GetCartController extends GetxController {
 
   Future<void> getCartInfo() async {
     result = await CartRepository().getCartItem();
+
     update();
   }
 }

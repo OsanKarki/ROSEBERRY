@@ -1,5 +1,7 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
+import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/error_view.dart';
@@ -40,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                           child: Container(
                             color: Colors.grey,
                             width: 380,
-                            height: 210,
+                            height: 220,
                             child: Column(
                               children: [
                                 Padding(
@@ -67,40 +69,63 @@ class ProfilePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "${personalInfo.firstName}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                          color: kGreen600),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.apply(
+                                            color: kGreen600,
+                                          ),
                                     ),
                                     const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
                                       "${personalInfo.lastname}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                          color: kGreen600),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.apply(
+                                            color: kGreen600,
+                                          ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  "${personalInfo.email}",
-                                  style: const TextStyle(
-                                      fontSize: 17, color: kGreen600),
-                                ),
+                                Text("${personalInfo.email}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.apply(
+                                          color: kGreen600,
+                                        )),
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  "${personalInfo.phoneNo}",
-                                  style: const TextStyle(
-                                      fontSize: 17, color: kGreen600),
-                                ),
-
+                                Text("${personalInfo.phoneNo}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.apply(
+                                          color: kGreen600,
+                                        )),
+                                Align(
+                                    widthFactor: 9,
+                                    alignment: Alignment.bottomRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(
+                                            AppRoutes.updateProfileScreen);
+                                      },
+                                      child: CircleAvatar(
+                                          backgroundColor:
+                                              CupertinoColors.systemYellow,
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: kGreen600,
+                                          )),
+                                    ))
                               ],
                             ),
                           ),

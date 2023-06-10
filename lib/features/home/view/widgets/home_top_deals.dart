@@ -30,21 +30,17 @@ class HomeTopDealsItems extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   'Top Deals',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.titleMedium?.apply(color: Colors.white,),
                 ),
                 TextButton(
                     onPressed: () {
                       Get.toNamed(AppRoutes.productListingPage,arguments:FilterQueryParams(topDeals: true));
 
                     },
-                    child: const Text('View All >>',
-                        style: TextStyle(
-                            fontSize: 15, color: Colors.orangeAccent)))
+                    child:  Text('View All >>',
+                        style: Theme.of(context).textTheme.bodyLarge?.apply(color: Colors.yellow,)))
               ],
             ),
           ),

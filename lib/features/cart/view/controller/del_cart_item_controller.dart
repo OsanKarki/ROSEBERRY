@@ -1,18 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/features/cart/model/add_to_cart_params.dart';
+import 'package:ecommerce_app/features/cart/model/del_cart_item_params.dart';
 import 'package:ecommerce_app/features/cart/repository/cart_repository.dart';
-import 'package:ecommerce_app/features/cart/view/controller/del_all_cart_item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/del_cart_item_params.dart';
-import 'get_to_cart_controller.dart';
 
-class CartController extends GetxController {
+class DelCartItemController extends GetxController {
   Either<NetworkException, String>? result;
 
-  Future<void> cartAdd(
-      BuildContext context, AddToCartParams addToCartParams) async {
+  Future<void> cartDel(
+      BuildContext context, DelCartItemParams delCartItemParams) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -20,7 +17,7 @@ class CartController extends GetxController {
         return const Center(child: CircularProgressIndicator());
       },
     );
-    result = await CartRepository().addToCart(addToCartParams);
+    result = await CartRepository().delCartItem(delCartItemParams);
     Get.back();
     result?.fold(
       (l) {
@@ -39,8 +36,6 @@ class CartController extends GetxController {
         Get.showSnackbar(snackBar);
       },
       (r) {
-        Get.find<GetCartController>().getCartInfo();
-
         final snackBar = GetSnackBar(
           message: r,
           // Snackbar message
@@ -53,9 +48,7 @@ class CartController extends GetxController {
           isDismissible:
               true, // Whether the snackbar can be dismissed by the user
         );
-
         Get.back();
-
         Get.showSnackbar(snackBar);
       },
     );

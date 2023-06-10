@@ -33,7 +33,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   children: [
                     Container(
                       height: 50,
-                      width: 300,
+                      width: 250,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),

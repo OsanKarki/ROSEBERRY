@@ -1,18 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/features/cart/model/add_to_cart_params.dart';
+import 'package:ecommerce_app/features/cart/model/del_cart_item_params.dart';
+import 'package:ecommerce_app/features/cart/model/update_cart_model.dart';
 import 'package:ecommerce_app/features/cart/repository/cart_repository.dart';
-import 'package:ecommerce_app/features/cart/view/controller/del_all_cart_item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/del_cart_item_params.dart';
-import 'get_to_cart_controller.dart';
 
-class CartController extends GetxController {
+class UpdateCartItemController extends GetxController {
   Either<NetworkException, String>? result;
 
-  Future<void> cartAdd(
-      BuildContext context, AddToCartParams addToCartParams) async {
+  Future<void> cartUpdate(
+      BuildContext context, UpdateCartItemParams updateCartItemParams) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -20,10 +18,10 @@ class CartController extends GetxController {
         return const Center(child: CircularProgressIndicator());
       },
     );
-    result = await CartRepository().addToCart(addToCartParams);
+    result = await CartRepository().updateCartItem(updateCartItemParams);
     Get.back();
     result?.fold(
-      (l) {
+          (l) {
         final snackBar = GetSnackBar(
           message: l.value,
           // Snackbar message
@@ -34,13 +32,11 @@ class CartController extends GetxController {
           duration: const Duration(seconds: 3),
           // Duration to display the snackbar
           isDismissible:
-              true, // Whether the snackbar can be dismissed by the user
+          true, // Whether the snackbar can be dismissed by the user
         );
         Get.showSnackbar(snackBar);
       },
-      (r) {
-        Get.find<GetCartController>().getCartInfo();
-
+          (r) {
         final snackBar = GetSnackBar(
           message: r,
           // Snackbar message
@@ -51,11 +47,9 @@ class CartController extends GetxController {
           duration: const Duration(seconds: 3),
           // Duration to display the snackbar
           isDismissible:
-              true, // Whether the snackbar can be dismissed by the user
+          true, // Whether the snackbar can be dismissed by the user
         );
-
         Get.back();
-
         Get.showSnackbar(snackBar);
       },
     );

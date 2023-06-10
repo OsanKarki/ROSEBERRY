@@ -19,7 +19,9 @@ class AuthMiddlewarePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const AppLogo(),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             PrimaryButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.loginPage);
@@ -39,12 +41,12 @@ class AuthMiddlewarePage extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            SecondaryButton(text: 'Create Account',
+            SecondaryButton(
+                text: 'Create Account',
                 onPressed: () {
-              Get.toNamed(AppRoutes.signupPage);
+                  Get.toNamed(AppRoutes.signupPage);
                 },
                 borderRadius: 5),
-
           ],
         ),
       ),

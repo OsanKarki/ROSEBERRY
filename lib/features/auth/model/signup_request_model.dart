@@ -11,7 +11,6 @@ class SignupRequestModel {
     this.email,
     this.password,
     this.phoneNumber,
-
   });
 
   Map<String, dynamic> toJson() {
@@ -21,7 +20,6 @@ class SignupRequestModel {
     json['email'] = email;
     json['password'] = password;
     json['phoneno'] = phoneNumber;
-
 
     return json;
   }

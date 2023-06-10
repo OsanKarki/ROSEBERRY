@@ -27,6 +27,7 @@ class CartDetailsModel {
 }
 
 class CartItemModel {
+  final String? itemId;
   final String? sku;
   final String? name;
   final String? quantity;
@@ -34,6 +35,7 @@ class CartItemModel {
   final String? image;
 
   CartItemModel({
+    this.itemId,
     this.sku,
     this.name,
     this.quantity,
@@ -49,6 +51,7 @@ class CartItemModel {
     final completeImageUrl = "$baseUrl/media/catalog/product$image1Url";
 
     return CartItemModel(
+        itemId: json['item_id'],
         sku: json['sku'],
         name: json['name'],
         quantity: json['qty'],

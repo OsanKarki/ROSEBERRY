@@ -66,9 +66,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 30),
                                   child: Text("${product.description}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -76,10 +76,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text(
-                                          "AVAILABILITY:",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
+                                        Text("AVAILABILITY:",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium),
                                         Text(
                                           " ${product.availability}",
                                           style: TextStyle(
@@ -94,8 +94,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     Row(
                                       children: [
-                                        const Text('SKU',
-                                            style: TextStyle(fontSize: 16)),
+                                        Text('SKU',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium),
                                         Text(":${product.sku}",
                                             style: const TextStyle(
                                                 fontSize: 16,
@@ -130,10 +132,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                           Positioned(
                             bottom: 20,
+                            left: 20,
                             right: 20,
                             child: PrimaryButton(
-                              height: 20,
-                              text: 'Add to bag',
+                              height: 18,
+                              text: 'Add to Cart',
                               onPressed: () {
                                 if (product.availability == "IN STOCK") {
                                   bool isAuthenticated = _authStatusController
@@ -151,7 +154,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ;
                                 }
                               },
-                              width: 200,
                               borderRadius: 5,
                               buttonColor: product.availability == "IN STOCK"
                                   ? kGreen400

@@ -13,9 +13,9 @@ import 'package:ecommerce_app/features/product/bindings/product_listing_bindings
 import 'package:ecommerce_app/features/product/view/product_details_screen.dart';
 import 'package:ecommerce_app/features/product/view/product_listing_page.dart';
 import 'package:ecommerce_app/features/profile/bindings/profile_bindings.dart';
+import 'package:ecommerce_app/features/profile/view/update_profile_page.dart';
 import 'package:ecommerce_app/features/splash_screen/splash_screen.dart';
 import 'package:get/get.dart';
-
 import '../../../features/cart/view/cart_page.dart';
 import '../../../features/category/view/category_page.dart';
 import '../../../features/home/view/home_page.dart';
@@ -33,6 +33,7 @@ class AppRoutes {
   static String signupPage = "/signupPage";
   static String productListingPage = "/productListingPage";
   static String splashScreen = "/splashScreen";
+  static String updateProfileScreen = "/updateProfileScreen";
 
   static final routes = [
     GetPage(
@@ -46,8 +47,6 @@ class AppRoutes {
     GetPage(
       name: cartPage,
       page: () => const CartPage(),
-
-
     ),
     GetPage(
       name: profilePage,
@@ -63,7 +62,6 @@ class AppRoutes {
           ProfileBindings(),
           CategoryBindings(),
           CartBindings(),
-
         ]),
     GetPage(
       name: productDetails,
@@ -80,11 +78,12 @@ class AppRoutes {
         binding: SignupBindings()),
     GetPage(
         name: productListingPage,
-        page: () =>  const ProductListingPage(),
+        page: () => const ProductListingPage(),
         binding: ProductListingBindings()),
     GetPage(
       name: splashScreen,
       page: () => const SplashScreen(),
-    )
+    ),
+    GetPage(name: updateProfileScreen, page: () => UpdateProfilePage())
   ];
 }

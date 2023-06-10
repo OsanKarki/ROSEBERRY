@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/features/auth/repository/auth_repository.dart';
 import 'package:ecommerce_app/features/cart/model/add_to_cart_params.dart';
+import 'package:ecommerce_app/features/cart/model/del_cart_item_params.dart';
 import 'package:ecommerce_app/features/cart/model/get_to_cart_model.dart';
+import 'package:ecommerce_app/features/cart/model/update_cart_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../auth/repository/auth_status_repository.dart';
@@ -53,6 +54,83 @@ class CartRepository {
         // Return an empty CartDetailsModel instance or any other default value
         return right(CartDetailsModel());
       }
+    } catch (e) {
+      if (e is DioError && e.error.runtimeType == SocketException) {
+        return left(NetworkException("No Internet Connection"));
+      } else {
+        return left(NetworkException("${e.toString()}"));
+      }
+    }
+  }
+
+  Future<Either<NetworkException, String>> delCartItem(
+      DelCartItemParams delCartItemParams) async {
+    final dio = Dio();
+    dio.interceptors.add(PrettyDioLogger());
+
+    dio.options.baseUrl = "https://qmbmart.store";
+
+    try {
+      final token = await AuthStatusRepository().getAccessToken();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      final response = await dio.delete('/rest/V1/cart/remove/115',
+          data: delCartItemParams.toJson());
+
+      final data = response.data;
+      print("@@@@@@@@@");
+      print(response.data);
+      return right(data[0]["message"]);
+    } catch (e) {
+      if (e is DioError && e.error.runtimeType == SocketException) {
+        return left(NetworkException("No Internet Connection"));
+      } else {
+        return left(NetworkException("${e.toString()}"));
+      }
+    }
+  }
+
+  Future<Either<NetworkException, String>> delAllCartItem(
+      DelCartItemParams delCartItemParams) async {
+    final dio = Dio();
+    dio.interceptors.add(PrettyDioLogger());
+
+    dio.options.baseUrl = "https://qmbmart.store";
+
+    try {
+      final token = await AuthStatusRepository().getAccessToken();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      final response = await dio.delete('/rest/V1/cart/delete',
+          data: delCartItemParams.toJson());
+
+      final data = response.data;
+      print("@@@@@@@@@");
+      print(response.data);
+      return right(data[0]["message"]);
+    } catch (e) {
+      if (e is DioError && e.error.runtimeType == SocketException) {
+        return left(NetworkException("No Internet Connection"));
+      } else {
+        return left(NetworkException("${e.toString()}"));
+      }
+    }
+  }
+
+  Future<Either<NetworkException, String>> updateCartItem(UpdateCartItemParams updateCartItemParams) async {
+    final dio = Dio();
+    dio.interceptors.add(PrettyDioLogger());
+
+    dio.options.baseUrl = "https://qmbmart.store";
+
+    try {
+      final token = await AuthStatusRepository().getAccessToken();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      final response = await dio.put('/rest/V1/cart/update',
+          data: updateCartItemParams.toJson());
+
+      final data = response.data;
+
+      print(response.data);
+      return right(data[0]["message"]);
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
         return left(NetworkException("No Internet Connection"));
