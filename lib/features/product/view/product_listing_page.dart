@@ -1,15 +1,18 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
+import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
 import 'package:ecommerce_app/features/product/controller/product_listing_controller.dart';
 import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../auth/view/controller/auth_status_checker_controller.dart';
 import '../../cart/model/add_to_cart_params.dart';
 import '../../cart/view/controller/add_cart_controller.dart';
+import '../../cart/view/controller/get_to_cart_controller.dart';
 
 class ProductListingPage extends StatefulWidget {
   const ProductListingPage({
@@ -47,11 +50,11 @@ class _ProductListingPageState extends State<ProductListingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      height: 50,
+                      height: 40,
                       width: 310,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -71,10 +74,58 @@ class _ProductListingPageState extends State<ProductListingPage> {
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.notifications_none,
-                      size: 25,
-                      color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                        Get.find<BnbController>().index = 2;
+                      },
+                      child: Stack(
+                        children: [
+                           Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                                backgroundColor: Colors.red,
+                                radius: 7,
+                                child: GetBuilder<GetCartController>(
+                                  builder: (controller) {
+                                    final result = controller.result;
+                                    if (result != null) {
+                                      return result.fold((l) => ErrorView(l.value), (cartDetails) {
+                                        if (cartDetails.cartItemsModel != null &&
+                                            cartDetails.cartItemsModel!.isNotEmpty) {
+                                          return  Text(
+                                            "${cartDetails.itemCount}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                ?.copyWith(
+                                              fontSize: 10,
+                                              color: Colors.white,
+
+                                            ),
+                                          );
+                                        } else {
+                                          return SizedBox.shrink();
+                                        }
+                                      });
+                                    } else {
+                                      return Shimmer(
+                                          child: Container(
+                                            height: 100,
+                                          ));
+                                    }
+                                  },
+                                )
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -92,20 +143,19 @@ class _ProductListingPageState extends State<ProductListingPage> {
                 return productList.isEmpty
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Center(
-                              child: Icon(
-                            CupertinoIcons.bag_badge_minus,
-                            size: 100,
-                            color: Colors.orangeAccent,
+                              child: Image.asset(
+                            "assets/png/emtCart.png",
+                            height: 100,
                           )),
                           Center(
                               child: Text(
                             'No Product Is Here For Now',
-                            style: TextStyle(
-                                color: Colors.orangeAccent,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.apply(color: Colors.orangeAccent),
                           ))
                         ],
                       )
@@ -125,14 +175,14 @@ class _ProductListingPageState extends State<ProductListingPage> {
                                 child: Container(
                                   height: 250,
                                   padding: const EdgeInsets.all(5),
-                                  decoration:  BoxDecoration(
-                                  color: Colors.white70,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: kGreen400.withOpacity(0.2),
-                                    width: 2.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white70,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: kGreen400.withOpacity(0.2),
+                                      width: 2.0,
+                                    ),
                                   ),
-                                ),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,

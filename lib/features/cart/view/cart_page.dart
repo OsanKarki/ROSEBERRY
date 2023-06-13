@@ -9,9 +9,9 @@ import 'package:ecommerce_app/features/cart/view/widgets/cart_bottom_Sheet.dart'
 import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../core/presentation/resources/app_colors.dart';
+import '../../../core/widgets/confirmation_dialog_box.dart';
 import '../../../core/widgets/error_view.dart';
 import '../model/del_cart_item_params.dart';
 import '../model/update_cart_model.dart';
@@ -43,11 +43,19 @@ class CartPage extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 10),
                       child: GestureDetector(
                         onTap: () {
-                          // Access the index using the ListView.builder index parameter
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ConfirmationDialogBox(
+                                text:
+                                "Are you sure you want to remove all \n item from cart?",
+                                onPressed: () {
+                                  Get.find<DelAllCartItemController>().cartAllDel(context, DelCartItemParams());
+                                  Get.back();
 
-                          Get.find<DelAllCartItemController>().cartAllDel(
-                            context,
-                            DelCartItemParams(),
+                                },
+                              );
+                            },
                           );
                         },
                         child: Icon(
@@ -121,30 +129,35 @@ class CartPage extends StatelessWidget {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          Get.find<DelCartItemController>()
-                                              .cartDel(
-                                                  context,
-                                                  DelCartItemParams(
-                                                    sku: cartDetails
-                                                        .cartItemsModel?[index]
-                                                        .sku,
-                                                    itemId: cartDetails
-                                                        .cartItemsModel?[index]
-                                                        .itemId,
-                                                    qty: cartDetails
-                                                        .cartItemsModel?[index]
-                                                        .quantity,
-                                                  ));
+                                          int itemId = int.parse(
+                                              "${cartDetails.cartItemsModel?[index].itemId}");
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return ConfirmationDialogBox(
+                                                text:
+                                                    "Are you sure you want to remove this \n item from cart?",
+                                                onPressed: () {
+                                                  Get.find<
+                                                          DelCartItemController>()
+                                                      .cartDel(context, itemId);
+                                                  Get.back();
+                                                },
+                                              );
+                                            },
+                                          );
                                         },
                                         child: Container(
-                                            height: 35,
-                                            width: 35,
-                                            color: Colors.grey.shade200,
-                                            child: Center(
-                                                child: Icon(
+                                          height: 35,
+                                          width: 35,
+                                          color: Colors.grey.shade200,
+                                          child: Center(
+                                            child: Icon(
                                               Icons.delete_outline,
                                               color: Colors.grey,
-                                            ))),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 5,
@@ -177,21 +190,28 @@ class CartPage extends StatelessWidget {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.find<UpdateCartItemController>()
-                                            .cartUpdate(
-                                                context,
-                                                UpdateCartItemParams(
-                                                  sku: cartDetails
-                                                      .cartItemsModel?[index]
-                                                      .sku,
-                                                  itemId: cartDetails
-                                                      .cartItemsModel?[index]
-                                                      .itemId,
-                                                  quantity: cartDetails
-                                                      .cartItemsModel?[index]
-                                                      .quantity,
-                                                )
-                                        );
+                                        if ((cartDetails.cartItemsModel?[index]
+                                                    .quantity ??
+                                                0) >
+                                            1) {
+                                          Get.find<UpdateCartItemController>()
+                                              .cartUpdate(
+                                                  context,
+                                                  UpdateCartItemParams(
+                                                    sku: cartDetails
+                                                        .cartItemsModel?[index]
+                                                        .sku,
+                                                    itemId: cartDetails
+                                                        .cartItemsModel?[index]
+                                                        .itemId,
+                                                    quantity: (cartDetails
+                                                                .cartItemsModel?[
+                                                                    index]
+                                                                .quantity ??
+                                                            0) -
+                                                        1,
+                                                  ));
+                                        }
                                       },
                                       child: Container(
                                         height: 25,
@@ -215,17 +235,24 @@ class CartPage extends StatelessWidget {
                                               "")),
                                     ),
                                     GestureDetector(
-                                      onTap: ()  {
-
-
-                                        Get.find<UpdateCartItemController>().cartUpdate(
-                                          context,
-                                          UpdateCartItemParams(
-                                            sku: cartDetails.cartItemsModel?[index].sku,
-                                            itemId: cartDetails.cartItemsModel?[index].itemId,
-                                            quantity:cartDetails.cartItemsModel?[index].quantity,
-                                          )
-                                        );
+                                      onTap: () {
+                                        Get.find<UpdateCartItemController>()
+                                            .cartUpdate(
+                                                context,
+                                                UpdateCartItemParams(
+                                                  sku: cartDetails
+                                                      .cartItemsModel?[index]
+                                                      .sku,
+                                                  itemId: cartDetails
+                                                      .cartItemsModel?[index]
+                                                      .itemId,
+                                                  quantity: (cartDetails
+                                                              .cartItemsModel?[
+                                                                  index]
+                                                              .quantity ??
+                                                          0) +
+                                                      1,
+                                                ));
                                       },
                                       child: Container(
                                         height: 25,

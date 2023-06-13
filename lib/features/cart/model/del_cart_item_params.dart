@@ -8,8 +8,8 @@ class DelCartItemParams {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json['sku'] = sku;
-    json['qty'] =qty;
-    json['item_id'] =itemId;
+    json['qty'] = qty;
+    json['item_id'] = itemId;
     return json;
   }
 }

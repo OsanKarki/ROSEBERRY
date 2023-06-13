@@ -49,7 +49,7 @@ class ProfilePage extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 30),
                                   child: Center(
                                     child: CircleAvatar(
-                                      radius: 30,
+                                      radius: 31,
                                       backgroundColor: Colors.yellow.shade700,
                                       child: Text(
                                         "${personalInfo.firstName?[0]}",
@@ -76,9 +76,7 @@ class ProfilePage extends StatelessWidget {
                                             color: kGreen600,
                                           ),
                                     ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
+
                                     Text(
                                       "${personalInfo.lastname}",
                                       style: Theme.of(context)
@@ -116,7 +114,9 @@ class ProfilePage extends StatelessWidget {
                                     child: GestureDetector(
                                       onTap: () {
                                         Get.toNamed(
-                                            AppRoutes.updateProfileScreen);
+                                          AppRoutes.updateProfileScreen,
+                                          arguments: personalInfo,
+                                        );
                                       },
                                       child: CircleAvatar(
                                           backgroundColor:

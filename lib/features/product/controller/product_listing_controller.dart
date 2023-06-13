@@ -15,7 +15,8 @@ class ProductListingController extends GetxController {
   Either<NetworkException, List<ProductModel>>? result;
 
   Future<void> getProductInfo(FilterQueryParams filterQueryParams) async {
-    result = await ProductRepository().getProductList(filterQueryParams: filterQueryParams);
+    result = await ProductRepository()
+        .getProductList(filterQueryParams: filterQueryParams);
 
     update();
   }

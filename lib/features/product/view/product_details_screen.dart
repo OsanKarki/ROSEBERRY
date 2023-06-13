@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:ecommerce_app/core/widgets/primary_button.dart';
+import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
 import 'package:ecommerce_app/features/cart/view/controller/add_cart_controller.dart';
 import 'package:ecommerce_app/features/product/controller/product_details_controller.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../auth/view/controller/auth_status_checker_controller.dart';
 import '../../cart/model/add_to_cart_params.dart';
+import '../../cart/view/controller/get_to_cart_controller.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({Key? key}) : super(key: key);
@@ -51,6 +53,77 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: (){
+                                          Get.back();
+                                        },
+                                        child: CircleAvatar(
+                                          child: Icon(Icons.arrow_back_ios_new,color: kGreen600,),
+                                          backgroundColor: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                          Get.until((route) => route.settings.name==AppRoutes.bottomNavigationBar);
+                                          Get.find<BnbController>().index = 2;
+                                        },
+                                        child: CircleAvatar(
+                                        child:  Stack(
+                                          children: [
+                                            Icon(Icons.shopping_cart_outlined,color: kGreen600,),
+                                            Positioned(
+                                              bottom: 0,
+                                              right: 0,
+                                              child: CircleAvatar(
+                                                  backgroundColor: Colors.red,
+                                                  radius: 7,
+                                                  child: GetBuilder<GetCartController>(
+                                                    builder: (controller) {
+                                                      final result = controller.result;
+                                                      if (result != null) {
+                                                        return result.fold((l) => ErrorView(l.value), (cartDetails) {
+                                                          if (cartDetails.cartItemsModel != null &&
+                                                              cartDetails.cartItemsModel!.isNotEmpty) {
+                                                            return  Text(
+                                                              "${cartDetails.itemCount}",
+                                                              style: Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodySmall
+                                                                  ?.copyWith(
+                                                                fontSize: 10,
+                                                                color: Colors.white,
+
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return SizedBox.shrink();
+                                                          }
+                                                        });
+                                                      } else {
+                                                        return Shimmer(
+                                                            child: Container(
+                                                              height: 100,
+                                                            ));
+                                                      }
+                                                    },
+                                                  )
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                          backgroundColor: Colors.grey.shade400,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 40),
                                   child: Center(
@@ -139,8 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               text: 'Add to Cart',
                               onPressed: () {
                                 if (product.availability == "IN STOCK") {
-                                  bool isAuthenticated = _authStatusController
-                                      .isAuthenticated.value;
+                                  bool isAuthenticated = _authStatusController.isAuthenticated.value;
                                   if (isAuthenticated) {
                                     Get.find<CartController>().cartAdd(
                                         context,

@@ -1,6 +1,6 @@
 class UpdateCartItemParams {
   final String? sku;
-  final String? quantity;
+  final int? quantity;
   final String? itemId;
 
   UpdateCartItemParams({this.quantity, this.itemId, this.sku});

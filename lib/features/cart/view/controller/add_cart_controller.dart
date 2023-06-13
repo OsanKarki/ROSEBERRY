@@ -1,11 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/cart/model/add_to_cart_params.dart';
 import 'package:ecommerce_app/features/cart/repository/cart_repository.dart';
-import 'package:ecommerce_app/features/cart/view/controller/del_all_cart_item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../model/del_cart_item_params.dart';
 import 'get_to_cart_controller.dart';
 
 class CartController extends GetxController {
@@ -53,8 +50,6 @@ class CartController extends GetxController {
           isDismissible:
               true, // Whether the snackbar can be dismissed by the user
         );
-
-        Get.back();
 
         Get.showSnackbar(snackBar);
       },

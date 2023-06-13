@@ -30,7 +30,7 @@ class CartItemModel {
   final String? itemId;
   final String? sku;
   final String? name;
-  final String? quantity;
+  final int? quantity;
   final String? price;
   final String? image;
 
@@ -54,7 +54,7 @@ class CartItemModel {
         itemId: json['item_id'],
         sku: json['sku'],
         name: json['name'],
-        quantity: json['qty'],
+        quantity: double.tryParse(json['qty'])?.toInt(),
         price: json['price'],
         image: completeImageUrl);
   }

@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/features/profile/model/profile_personal_info_model.dart';
 import 'package:ecommerce_app/features/profile/update_profile/model/update_profile_model.dart';
 import 'package:ecommerce_app/features/profile/update_profile/update_profile_controller.dart';
+import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,7 +11,9 @@ import '../../../core/widgets/primary_textfield.dart';
 import '../../auth/model/signup_request_model.dart';
 
 class UpdateProfilePage extends StatefulWidget {
-  const UpdateProfilePage({Key? key}) : super(key: key);
+  final String? profilename;
+
+  const UpdateProfilePage({Key? key, this.profilename}) : super(key: key);
 
   @override
   State<UpdateProfilePage> createState() => _UpdateProfilePage();
@@ -27,6 +31,10 @@ class _UpdateProfilePage extends State<UpdateProfilePage> {
     // TODO: implement initState
     super.initState();
     formKey = GlobalKey<FormState>();
+    final ProfilePersonalInfoModel personalInfo = Get.arguments;
+    firstNameController.text = "${personalInfo.firstName}";
+    lastNameController.text = "${personalInfo.lastname}";
+    phoneNumberController.text = "${personalInfo.phoneNo}";
   }
 
   @override
@@ -71,18 +79,39 @@ class _UpdateProfilePage extends State<UpdateProfilePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         PrimaryTextField(
+                          validator: (value) {
+                            if (value != null && value.isNotEmpty) {
+                              return null;
+                            } else {
+                              return "This field is required";
+                            }
+                          },
                           controller: firstNameController,
                           label: 'First Name',
                           prefixIcon: Icons.person,
                           borderRadius: 20,
                         ),
                         PrimaryTextField(
+                          validator: (value) {
+                            if (value != null && value.isNotEmpty) {
+                              return null;
+                            } else {
+                              return "This field is required";
+                            }
+                          },
                           controller: lastNameController,
                           label: 'Last Name',
                           prefixIcon: Icons.person,
                           borderRadius: 20,
                         ),
                         PrimaryTextField(
+                          validator: (value) {
+                            if (value != null && value.isNotEmpty) {
+                              return null;
+                            } else {
+                              return "This field is required";
+                            }
+                          },
                           controller: phoneNumberController,
                           prefixIcon: Icons.phone,
                           label: 'Phone Number',
@@ -95,13 +124,15 @@ class _UpdateProfilePage extends State<UpdateProfilePage> {
                           text: 'Update',
                           borderRadius: 20,
                           onPressed: () {
-                            Get.find<ProfileUpdateController>().profileUpdate(
-                                context,
-                                ProfileUpdateParams(
+                            if (formKey.currentState?.validate() == true) {
+                              Get.find<ProfileUpdateController>().profileUpdate(
+                                  context,
+                                  ProfileUpdateParams(
                                     firstName: firstNameController.text,
                                     lastName: lastNameController.text,
                                     phoneNumber: phoneNumberController.text,
-                                    companyBrn: null));
+                                  ));
+                            }
                           },
                         ),
                         const SizedBox(

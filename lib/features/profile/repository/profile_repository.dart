@@ -38,7 +38,9 @@ class ProfileRepository {
 
   Future<Either<NetworkException, String>> update(ProfileUpdateParams profileUpdateParams) async {
     final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
+    dio.interceptors.add(PrettyDioLogger(
+       requestBody: true,
+    ));
     dio.options.baseUrl = "https://qmbmart.store";
 
     try {

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/cart/model/del_cart_item_params.dart';
 import 'package:ecommerce_app/features/cart/model/update_cart_model.dart';
 import 'package:ecommerce_app/features/cart/repository/cart_repository.dart';
+import 'package:ecommerce_app/features/cart/view/controller/get_to_cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,6 +38,7 @@ class UpdateCartItemController extends GetxController {
         Get.showSnackbar(snackBar);
       },
           (r) {
+            Get.find<GetCartController>().getCartInfo();
         final snackBar = GetSnackBar(
           message: r,
           // Snackbar message

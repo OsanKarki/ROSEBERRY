@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/profile/repository/profile_repository.dart';
 import 'package:ecommerce_app/features/profile/update_profile/model/update_profile_model.dart';
+import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +33,7 @@ class ProfileUpdateController extends GetxController {
         Get.showSnackbar(snackBar);
       },
           (r) {
+            Get.find<PersonalInfoController>().getPersonalInfo();
         final snackBar=   GetSnackBar(
           message: r, // Snackbar message
           backgroundColor: Colors.green, // Background color of the snackbar

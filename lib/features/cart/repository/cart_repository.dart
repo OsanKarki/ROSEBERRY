@@ -63,8 +63,7 @@ class CartRepository {
     }
   }
 
-  Future<Either<NetworkException, String>> delCartItem(
-      DelCartItemParams delCartItemParams) async {
+  Future<Either<NetworkException, String>> delCartItem(int id) async {
     final dio = Dio();
     dio.interceptors.add(PrettyDioLogger());
 
@@ -73,8 +72,8 @@ class CartRepository {
     try {
       final token = await AuthStatusRepository().getAccessToken();
       dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.delete('/rest/V1/cart/remove/115',
-          data: delCartItemParams.toJson());
+      final response = await dio.delete('/rest/V1/cart/remove/$id',
+          );
 
       final data = response.data;
       print("@@@@@@@@@");
@@ -90,7 +89,7 @@ class CartRepository {
   }
 
   Future<Either<NetworkException, String>> delAllCartItem(
-      DelCartItemParams delCartItemParams) async {
+      ) async {
     final dio = Dio();
     dio.interceptors.add(PrettyDioLogger());
 
@@ -100,7 +99,7 @@ class CartRepository {
       final token = await AuthStatusRepository().getAccessToken();
       dio.options.headers['Authorization'] = 'Bearer $token';
       final response = await dio.delete('/rest/V1/cart/delete',
-          data: delCartItemParams.toJson());
+          );
 
       final data = response.data;
       print("@@@@@@@@@");
@@ -117,7 +116,7 @@ class CartRepository {
 
   Future<Either<NetworkException, String>> updateCartItem(UpdateCartItemParams updateCartItemParams) async {
     final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
+    dio.interceptors.add(PrettyDioLogger(requestBody: true));
 
     dio.options.baseUrl = "https://qmbmart.store";
 
