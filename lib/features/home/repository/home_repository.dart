@@ -2,19 +2,17 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/core/data/remote/api_client.dart';
+import 'package:ecommerce_app/core/data/remote/api_constants.dart';
 import 'package:ecommerce_app/features/home/model/image_slider_model.dart';
+import 'package:get/get.dart';
 
 class HomeRepository {
   Future<Either<NetworkException, List<ImageSliderModel>>>
       getImageSlider() async {
-    final dio = Dio();
-    dio.options.baseUrl = "https://qmbmart.store";
-
     try {
-      final response =
-          await dio.get("/rest/V1/homepage/sliders?filter=qmb-sliders");
-      final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
+      final data = await Get.find<ApiClient>().get(ApiConstants.getImageSlider);
+
       final imageList = data[0]['image'];
 
       final imageSliderModelList = imageList.map<ImageSliderModel>((imageJson) {

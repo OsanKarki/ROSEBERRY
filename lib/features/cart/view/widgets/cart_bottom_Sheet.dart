@@ -1,4 +1,7 @@
+import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
@@ -72,7 +75,9 @@ class CartBottomSheet extends StatelessWidget {
                           text: "PROCEED TO SHIPPING",
                           borderRadius: 5,
                           buttonColor: kGreen400,
-                          onPressed: () {}),
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.checkoutPage);
+                          }),
                     )
                   ],
                 ),
@@ -82,10 +87,7 @@ class CartBottomSheet extends StatelessWidget {
             }
           });
         } else {
-          return Shimmer(
-              child: Container(
-                height: 100,
-              ));
+          return SizedBox.shrink();
         }
       },
     );

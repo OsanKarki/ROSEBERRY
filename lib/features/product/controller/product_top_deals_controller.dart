@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:ecommerce_app/features/product/model/product_model.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class ProductTopDealsController extends GetxController {
   Either<NetworkException, List<ProductModel>>? result;
 
   Future<void> getProductInfo() async {
-    result = await ProductRepository().getTopDealsProduct();
+    result = await ProductRepository().getTopDealsProduct( FilterQueryParams(topDeals: true));
 
     update();
   }

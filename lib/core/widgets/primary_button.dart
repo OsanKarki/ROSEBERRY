@@ -18,7 +18,7 @@ class PrimaryButton extends StatelessWidget {
     this.height = 15,
     this.width,
     this.buttonColor = kGreen400,
-    this.textColor,
+    this.textColor=Colors.white,
     this.borderRadius = 10,
     super.key,
   });
@@ -39,7 +39,7 @@ class PrimaryButton extends StatelessWidget {
         ),
         child: Center(
             child:
-                Text(text!, style: TextStyle(color: textColor, fontSize: 18))),
+                Text(text!,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: textColor),)),
       ),
     );
   }

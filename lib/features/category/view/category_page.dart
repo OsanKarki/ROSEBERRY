@@ -1,13 +1,11 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
-import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
+import 'package:ecommerce_app/features/bnb/view/controller/bnb_controller.dart';
 import 'package:ecommerce_app/features/category/view/controller/category_controller.dart';
 import 'package:ecommerce_app/features/category/view/widgets/category_content_view.dart';
 import 'package:ecommerce_app/features/category/view/widgets/category_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
+import '../../../core/presentation/routes/routes.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../cart/view/controller/get_to_cart_controller.dart';
 
@@ -36,28 +34,35 @@ class _CategoryPageState extends State<CategoryPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 50,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.search,
-                              color: Colors.grey.shade700,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const Text(
-                              'Search products',
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.productSearchPage);
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                                size: 20,
+
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                               Text(
+                                'Search products',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey)
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -72,44 +77,51 @@ class _CategoryPageState extends State<CategoryPage> {
                             size: 25,
                              color: Colors.white,
                     ),
-                           Positioned(
-                             bottom: 0,
-                             right: 0,
-                             child: CircleAvatar(
-                                 backgroundColor: Colors.red,
-                                 radius: 7,
-                                 child: GetBuilder<GetCartController>(
-                                   builder: (controller) {
-                                     final result = controller.result;
-                                     if (result != null) {
-                                       return result.fold((l) => ErrorView(l.value), (cartDetails) {
-                                         if (cartDetails.cartItemsModel != null &&
-                                             cartDetails.cartItemsModel!.isNotEmpty) {
-                                           return  Text(
-                                             "${cartDetails.itemCount}",
-                                             style: Theme.of(context)
-                                                 .textTheme
-                                                 .bodySmall
-                                                 ?.copyWith(
-                                               fontSize: 10,
-                                               color: Colors.white,
-
-                                             ),
-                                           );
-                                         } else {
-                                           return SizedBox.shrink();
-                                         }
-                                       });
-                                     } else {
-                                       return Shimmer(
-                                           child: Container(
-                                             height: 100,
-                                           ));
-                                     }
-                                   },
-                                 )
-                             ),
-                           ),
+                           GetBuilder<GetCartController>(
+                             builder: (controller) {
+                               final result =
+                                   controller.result;
+                               if (result != null) {
+                                 return result.fold(
+                                         (l) =>
+                                         SizedBox.shrink(),
+                                         (cartDetails) {
+                                       if (cartDetails
+                                           .cartItemsModel !=
+                                           null &&
+                                           cartDetails
+                                               .cartItemsModel!
+                                               .isNotEmpty) {
+                                         return Positioned(
+                                             bottom: 0,
+                                             right: 0,
+                                             child: CircleAvatar(
+                                                 backgroundColor:
+                                                 Colors.red,
+                                                 radius: 7,
+                                                 child: Text(
+                                                   "${cartDetails.itemCount}",
+                                                   style: Theme.of(
+                                                       context)
+                                                       .textTheme
+                                                       .bodySmall
+                                                       ?.copyWith(
+                                                     fontSize:
+                                                     10,
+                                                     color: Colors
+                                                         .white,
+                                                   ),
+                                                 )));
+                                       } else {
+                                         return SizedBox
+                                             .shrink();
+                                       }
+                                     });
+                               } else {
+                                 return SizedBox.shrink();
+                               }
+                             },
+                           )
                          ],
                        ),
                      ),

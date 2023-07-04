@@ -36,6 +36,7 @@ class CartController extends GetxController {
         Get.showSnackbar(snackBar);
       },
       (r) {
+
         Get.find<GetCartController>().getCartInfo();
 
         final snackBar = GetSnackBar(

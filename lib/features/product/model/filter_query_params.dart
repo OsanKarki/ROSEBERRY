@@ -1,22 +1,21 @@
 class FilterQueryParams {
   int? pageSize;
-  int? searchQuery;
+  String? searchQuery;
   int? currentPage;
   int? categoryId;
   bool? topRated;
   bool? bestSeller;
   bool? topDeals;
-  String? sku;
 
-  FilterQueryParams(
-      {this.pageSize = 20,
-      this.searchQuery,
-      this.currentPage = 1,
-      this.categoryId,
-      this.topRated,
-      this.bestSeller,
-      this.topDeals,
-      this.sku});
+  FilterQueryParams({
+    this.pageSize = 20,
+    this.searchQuery,
+    this.currentPage = 1,
+    this.categoryId,
+    this.topRated,
+    this.bestSeller,
+    this.topDeals,
+  });
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -27,7 +26,7 @@ class FilterQueryParams {
     if (topRated != null) map['topRated'] = true;
     if (bestSeller != null) map['bestSeller'] = true;
     if (topDeals != null) map['topDeals'] = true;
-    if (sku != null) map['sku'] = sku.toString();
+    if (searchQuery != null) map['searchQuery'] = searchQuery;
 
     return map;
   }

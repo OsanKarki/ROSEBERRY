@@ -57,6 +57,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
             ],
           ),
         TextFormField(
+          // onTapOutside: , bahira click garda keyboard banda huncha yesle ..
           validator: widget.validator,
 
           controller: widget.controller,

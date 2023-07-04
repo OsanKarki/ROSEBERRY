@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:ecommerce_app/core/widgets/primary_button.dart';
-import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
+import 'package:ecommerce_app/features/bnb/view/controller/bnb_controller.dart';
 import 'package:ecommerce_app/features/cart/view/controller/del_all_cart_item_controller.dart';
 import 'package:ecommerce_app/features/cart/view/controller/del_cart_item_controller.dart';
 import 'package:ecommerce_app/features/cart/view/controller/get_to_cart_controller.dart';
@@ -16,10 +16,22 @@ import '../../../core/widgets/error_view.dart';
 import '../model/del_cart_item_params.dart';
 import '../model/update_cart_model.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
   @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<GetCartController>().getCartInfo();
+  }
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
@@ -36,7 +48,7 @@ class CartPage extends StatelessWidget {
             builder: (controller) {
               final result = controller.result;
               if (result != null) {
-                return result.fold((l) => ErrorView(l.value), (cartDetails) {
+                return result.fold((l) => SizedBox.shrink(), (cartDetails) {
                   if (cartDetails.cartItemsModel != null &&
                       cartDetails.cartItemsModel!.isNotEmpty) {
                     return Padding(
@@ -48,11 +60,11 @@ class CartPage extends StatelessWidget {
                             builder: (BuildContext context) {
                               return ConfirmationDialogBox(
                                 text:
-                                "Are you sure you want to remove all \n item from cart?",
+                                    "Are you sure you want to remove all \n item from cart?",
                                 onPressed: () {
-                                  Get.find<DelAllCartItemController>().cartAllDel(context, DelCartItemParams());
+                                  Get.find<DelAllCartItemController>()
+                                      .cartAllDel(context, DelCartItemParams());
                                   Get.back();
-
                                 },
                               );
                             },
@@ -103,9 +115,9 @@ class CartPage extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.productDetails,
-                                      arguments: FilterQueryParams(
-                                          sku:
-                                              "${cartDetails.cartItemsModel?[index].sku}"));
+                                      arguments:
+
+                                              "${cartDetails.cartItemsModel?[index].sku}");
                                 },
                                 child: Image.network(
                                   "${cartDetails.cartItemsModel?[index].image}",
@@ -148,8 +160,8 @@ class CartPage extends StatelessWidget {
                                           );
                                         },
                                         child: Container(
-                                          height: 35,
-                                          width: 35,
+                                          height: 25,
+                                          width: 25,
                                           color: Colors.grey.shade200,
                                           child: Center(
                                             child: Icon(
@@ -280,13 +292,13 @@ class CartPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/png/emtCart.png", height: 100),
+                      Image.asset("assets/png/emtCart.png", height: 80),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
                         "Your Basket is Empty",
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       SizedBox(
                         height: 15,
@@ -294,13 +306,14 @@ class CartPage extends StatelessWidget {
                       Text(
                         "Choose products is that you want \nto buy and fill your cart",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       PrimaryButton(
                           text: "Start Shopping",
+                          height: 10,
                           width: 200,
                           borderRadius: 5,
                           buttonColor: kGreen400,

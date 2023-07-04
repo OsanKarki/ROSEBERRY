@@ -2,26 +2,21 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/core/data/remote/api_client.dart';
+import 'package:ecommerce_app/core/data/remote/api_constants.dart';
 import 'package:ecommerce_app/features/cart/model/add_to_cart_params.dart';
-import 'package:ecommerce_app/features/cart/model/del_cart_item_params.dart';
 import 'package:ecommerce_app/features/cart/model/get_to_cart_model.dart';
 import 'package:ecommerce_app/features/cart/model/update_cart_model.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:get/get.dart';
 
-import '../../auth/repository/auth_status_repository.dart';
 
 class CartRepository {
   Future<Either<NetworkException, String>> addToCart(
       AddToCartParams addToCartParams) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-    dio.options.baseUrl = "https://qmbmart.store";
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response =
-          await dio.post("/rest/V1/cart/add", data: addToCartParams.toJson());
-      final data = response.data;
+      final data = await Get.find<ApiClient>()
+          .authPost(ApiConstants.addToCart, data: addToCartParams.toJson());
+
       return right(data[0]["message"]);
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
@@ -33,25 +28,16 @@ class CartRepository {
   }
 
   Future<Either<NetworkException, CartDetailsModel>> getCartItem() async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.get('/rest/V1/cart');
+      final data =
+          await Get.find<ApiClient>().authGet(ApiConstants.getCartItem);
 
-      final data = response.data;
-      print("@@@@@@@@@");
-      print(response.data);
       if (data != null) {
         final cartList = data[0]["cart"];
         final cartModelList = CartDetailsModel.fromJson(cartList);
         return right(cartModelList);
       } else {
-        // Return an empty CartDetailsModel instance or any other default value
+        // Return an empty CartDetailsModel instance or any @other default value
         return right(CartDetailsModel());
       }
     } catch (e) {
@@ -64,20 +50,12 @@ class CartRepository {
   }
 
   Future<Either<NetworkException, String>> delCartItem(int id) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.delete('/rest/V1/cart/remove/$id',
-          );
+      final data = await Get.find<ApiClient>().authDelete(
+        "${ApiConstants.deleteCartItem}/$id",
+      );
 
-      final data = response.data;
-      print("@@@@@@@@@");
-      print(response.data);
+      print(data);
       return right(data[0]["message"]);
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
@@ -88,22 +66,13 @@ class CartRepository {
     }
   }
 
-  Future<Either<NetworkException, String>> delAllCartItem(
-      ) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
+  Future<Either<NetworkException, String>> delAllCartItem() async {
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.delete('/rest/V1/cart/delete',
-          );
+      final data = await Get.find<ApiClient>().authDelete(
+        ApiConstants.deleteAllCartItem,
+      );
 
-      final data = response.data;
-      print("@@@@@@@@@");
-      print(response.data);
+      print(data);
       return right(data[0]["message"]);
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
@@ -114,25 +83,20 @@ class CartRepository {
     }
   }
 
-  Future<Either<NetworkException, String>> updateCartItem(UpdateCartItemParams updateCartItemParams) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger(requestBody: true));
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
+  Future<Either<NetworkException, String>> updateCartItem(
+      UpdateCartItemParams updateCartItemParams) async {
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.put('/rest/V1/cart/update',
+      final data = await Get.find<ApiClient>().authPut(
+          ApiConstants.updateCartItem,
           data: updateCartItemParams.toJson());
 
-      final data = response.data;
-
-      print(response.data);
+      print(data);
       return right(data[0]["message"]);
     } catch (e) {
       if (e is DioError && e.error.runtimeType == SocketException) {
         return left(NetworkException("No Internet Connection"));
+      } else if (e is DioError && e.type == DioErrorType.badResponse) {
+        return left(NetworkException("${e.response?.data[0]["error"]}"));
       } else {
         return left(NetworkException("${e.toString()}"));
       }

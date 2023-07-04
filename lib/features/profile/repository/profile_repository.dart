@@ -1,26 +1,22 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/core/data/remote/api_constants.dart';
 import 'package:ecommerce_app/features/auth/repository/auth_status_repository.dart';
 import 'package:ecommerce_app/features/profile/model/profile_personal_info_model.dart';
 import 'package:ecommerce_app/features/profile/update_profile/model/update_profile_model.dart';
+import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import '../../../core/data/remote/api_client.dart';
 
 class ProfileRepository {
   Future<Either<NetworkException, ProfilePersonalInfoModel>>
       getUserInfo() async {
-    final dio = Dio();
-
-    dio.interceptors.add(PrettyDioLogger());
-    dio.options.baseUrl = "https://qmbmart.store";
-
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.get(
-        "/rest/V1/customer/me",
+      final data = await Get.find<ApiClient>().authGet(
+        ApiConstants.getUserInfo,
       );
-      final data = response.data;
 
       final infoJson = data[0];
 
@@ -36,19 +32,14 @@ class ProfileRepository {
     }
   }
 
-  Future<Either<NetworkException, String>> update(ProfileUpdateParams profileUpdateParams) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger(
-       requestBody: true,
-    ));
-    dio.options.baseUrl = "https://qmbmart.store";
+  Future<Either<NetworkException, String>> update(
+      ProfileUpdateParams profileUpdateParams) async {
+
 
     try {
-      final token = await AuthStatusRepository().getAccessToken();
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      final response = await dio.put("/rest/V1/customer/update",
+
+      final data = await Get.find<ApiClient>().authPut(ApiConstants.updateUserInfo,
           data: profileUpdateParams.toJson());
-      final data = response.data;
 
       return right(data[0]["message"]);
     } catch (e) {

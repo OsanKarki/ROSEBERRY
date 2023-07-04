@@ -62,7 +62,8 @@ class ConfirmationDialogBox extends StatelessWidget {
                   PrimaryButton(
                       text: "yes",
                       onPressed:
-                          onPressed),
+                          onPressed,
+                  ),
                 )
               ],
             )

@@ -29,7 +29,7 @@ class HomeBestSellerItems extends StatelessWidget {
             children: [
                Text(
                 'Best Seller',
-                style:  Theme.of(context).textTheme.titleMedium?.apply(color: Colors.white,),
+                   style:  Theme.of(context).textTheme.bodyLarge?.apply(color: Colors.white,)
               ),
               TextButton(
                   onPressed: () {

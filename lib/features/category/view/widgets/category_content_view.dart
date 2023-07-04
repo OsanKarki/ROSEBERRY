@@ -37,7 +37,7 @@ class CategoryContentView extends StatelessWidget {
                               Get.toNamed(AppRoutes.productListingPage,
                                   arguments: FilterQueryParams(categoryId: subCategoryModel.id));
                             },
-                            child: Text("${subCategoryModel.name}")),
+                            child: Text("${subCategoryModel.name}" ,style: Theme.of(context).textTheme.bodyMedium,)),
                         children: List.generate(
                           subCategoryModelList?[index]
                                   .subCategoryChildModel
@@ -53,7 +53,7 @@ class CategoryContentView extends StatelessWidget {
                                   Get.toNamed(AppRoutes.productListingPage,
                                       arguments: FilterQueryParams(categoryId: childCategoryModel?.id));
                                 },
-                                child: Text("${childCategoryModel?.name}"),
+                                child: Text("${childCategoryModel?.name}",style: Theme.of(context).textTheme.bodyMedium,),
                               ),
                             );
                           },

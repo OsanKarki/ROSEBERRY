@@ -1,13 +1,10 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
-import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
+import 'package:ecommerce_app/features/bnb/view/controller/bnb_controller.dart';
 import 'package:ecommerce_app/features/product/controller/product_listing_controller.dart';
-import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../auth/view/controller/auth_status_checker_controller.dart';
 import '../../cart/model/add_to_cart_params.dart';
@@ -39,67 +36,73 @@ class _ProductListingPageState extends State<ProductListingPage> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: kGreen600,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(19),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 310,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.search,
-                              color: Colors.grey.shade700,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const Text(
-                              'Search products',
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(top: 30,left: 50),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.productSearchPage);
+                },
+                child: Container(
+                  height: 43,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: Colors.grey.shade700,
+                          size: 15,
                         ),
-                      ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Search products',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey),
+                        )
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        Get.find<BnbController>().index = 2;
-                      },
-                      child: Stack(
-                        children: [
-                           Icon(
-                            Icons.shopping_cart_outlined,
-                            size: 25,
-                            color: Colors.white,
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 7,
-                                child: GetBuilder<GetCartController>(
-                                  builder: (controller) {
-                                    final result = controller.result;
-                                    if (result != null) {
-                                      return result.fold((l) => ErrorView(l.value), (cartDetails) {
-                                        if (cartDetails.cartItemsModel != null &&
-                                            cartDetails.cartItemsModel!.isNotEmpty) {
-                                          return  Text(
+                  ),
+                ),
+              ),
+              // SizedBox(width: 10,),
+              GestureDetector(
+                onTap: () {
+                  Get.until((route) => route.settings.name==AppRoutes.bottomNavigationBar);
+                  Get.find<BnbController>().index = 2;
+                },
+                child: Stack(
+                  children: [
+                    Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                    GetBuilder<GetCartController>(
+                      builder: (controller) {
+                        final result = controller.result;
+                        if (result != null) {
+                          return result.fold((l) => SizedBox.shrink(),
+                                  (cartDetails) {
+                                if (cartDetails.cartItemsModel != null &&
+                                    cartDetails.cartItemsModel!.isNotEmpty) {
+                                  return Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: CircleAvatar(
+                                          backgroundColor: Colors.red,
+                                          radius: 7,
+                                          child: Text(
                                             "${cartDetails.itemCount}",
                                             style: Theme.of(context)
                                                 .textTheme
@@ -107,31 +110,23 @@ class _ProductListingPageState extends State<ProductListingPage> {
                                                 ?.copyWith(
                                               fontSize: 10,
                                               color: Colors.white,
-
                                             ),
-                                          );
-                                        } else {
-                                          return SizedBox.shrink();
-                                        }
-                                      });
-                                    } else {
-                                      return Shimmer(
-                                          child: Container(
-                                            height: 100,
-                                          ));
-                                    }
-                                  },
-                                )
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                                          )));
+                                } else {
+                                  return SizedBox.shrink();
+                                }
+                              });
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
+                    )
                   ],
                 ),
               ),
-            ),
+            ],
           ),
+        ),
         ),
         backgroundColor: Colors.grey.shade200,
         body: GetBuilder<ProductListingController>(
@@ -169,11 +164,10 @@ class _ProductListingPageState extends State<ProductListingPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.productDetails,
-                                      arguments: FilterQueryParams(
-                                          sku: productList[index].sku));
+                                      arguments: productList[index].sku);
                                 },
                                 child: Container(
-                                  height: 250,
+                                  height: 240,
                                   padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     color: Colors.white70,
@@ -195,12 +189,17 @@ class _ProductListingPageState extends State<ProductListingPage> {
                                           height: 150,
                                         ),
                                       ),
-                                      Text(
-                                        "${productList[index].name}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.apply(color: kGreen600),
+                                      Container(
+                                        height: 30,
+                                        child: Text(
+                                          "${productList[index].name}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.apply(color: kGreen600),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                        ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -210,7 +209,7 @@ class _ProductListingPageState extends State<ProductListingPage> {
                                             "Rs:${double.parse("${productList[index].price}")}",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge
+                                                .bodyMedium
                                                 ?.apply(
                                                   color: Colors.red,
                                                 ),

@@ -1,10 +1,8 @@
 import 'package:ecommerce_app/features/auth/view/controller/auth_status_checker_controller.dart';
-import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
+import 'package:ecommerce_app/features/bnb/view/controller/bnb_controller.dart';
 import 'package:ecommerce_app/features/shared/auth_middleware_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-import '../../../core/widgets/error_view.dart';
 import '../../cart/view/cart_page.dart';
 import '../../cart/view/controller/get_to_cart_controller.dart';
 import '../../category/view/category_page.dart';
@@ -55,48 +53,51 @@ class _BottonNavigationBarState extends State<BottonNavigationBar> {
                       ? Stack(
                           children: [
                             Icon(Icons.shopping_cart),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 7,
-                                child: GetBuilder<GetCartController>(
-                                  builder: (controller) {
-                                    final result = controller.result;
-                                    if (result != null) {
-                                      return result
-                                          .fold((l) => ErrorView(l.value),
-                                              (cartDetails) {
-                                        if (cartDetails.cartItemsModel !=
-                                                null &&
+                            GetBuilder<GetCartController>(
+                              builder: (controller) {
+                                final result =
+                                    controller.result;
+                                if (result != null) {
+                                  return result.fold(
+                                          (l) =>
+                                          SizedBox.shrink(),
+                                          (cartDetails) {
+                                        if (cartDetails
+                                            .cartItemsModel !=
+                                            null &&
                                             cartDetails
-                                                .cartItemsModel!.isNotEmpty) {
-                                          return Text(
-                                            "${cartDetails.itemCount}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall
-                                                ?.copyWith(
-                                                  fontSize: 10,
-                                                  color: Colors.white,
-                                                ),
-                                          );
+                                                .cartItemsModel!
+                                                .isNotEmpty) {
+                                          return Positioned(
+                                              bottom: 0,
+                                              right: 0,
+                                              child: CircleAvatar(
+                                                  backgroundColor:
+                                                  Colors.red,
+                                                  radius: 7,
+                                                  child: Text(
+                                                    "${cartDetails.itemCount}",
+                                                    style: Theme.of(
+                                                        context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                      10,
+                                                      color: Colors
+                                                          .white,
+                                                    ),
+                                                  )));
                                         } else {
-                                          return SizedBox.shrink();
+                                          return SizedBox
+                                              .shrink();
                                         }
                                       });
-                                    } else {
-                                      return Shimmer(
-                                        child: Container(
-                                          height: 100,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
+                                } else {
+                                  return SizedBox.shrink();
+                                }
+                              },
+                            )
                           ],
                         )
                       : Icon(Icons.shopping_cart),

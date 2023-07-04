@@ -25,7 +25,7 @@ class ProductModel {
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     final imageUrl = json['product_images']['image'];
     final prefix = json['product_images']['prefix'];
-    final completeImageUrl = "$baseUrl/$prefix/$imageUrl";
+    final completeImageUrl = "$baseUrl/media/catalog/product/$imageUrl";
     return ProductModel(
         id: json['entity_id'],
         name: json['name'],

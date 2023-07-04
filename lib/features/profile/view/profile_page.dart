@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
+import 'package:ecommerce_app/core/widgets/confirmation_dialog_box.dart';
 import 'package:ecommerce_app/features/profile/view/controller/personal_info_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,12 @@ class ProfilePage extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  Get.find<AuthStatusController>().logout();
+                  showDialog(context: context, builder: (context) => ConfirmationDialogBox(text: "Are you sure you want to logout", onPressed: (){
+                    Get.find<AuthStatusController>()
+                        .logout();
+                    Get.back();
+
+                  }),);
                 },
                 icon: Icon(Icons.logout))
           ],
@@ -71,17 +77,18 @@ class ProfilePage extends StatelessWidget {
                                       "${personalInfo.firstName}",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .titleLarge
+                                          .titleMedium
                                           ?.apply(
                                             color: kGreen600,
                                           ),
                                     ),
+                                    SizedBox(width: 5,),
 
                                     Text(
                                       "${personalInfo.lastname}",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .titleLarge
+                                          .titleMedium
                                           ?.apply(
                                             color: kGreen600,
                                           ),
@@ -94,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                                 Text("${personalInfo.email}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium
+                                        .bodyMedium
                                         ?.apply(
                                           color: kGreen600,
                                         )),
@@ -104,7 +111,7 @@ class ProfilePage extends StatelessWidget {
                                 Text("${personalInfo.phoneNo}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium
+                                        .bodyMedium
                                         ?.apply(
                                           color: kGreen600,
                                         )),
@@ -141,14 +148,12 @@ class ProfilePage extends StatelessWidget {
                                 );
                                 return Column(
                                   children: [
-                                    AccountMenuItem(
-                                      onTap: () {},
-                                      icon: Icons.book_outlined,
-                                      title: 'Address book',
-                                    ),
+
                                     menuSpacing,
                                     AccountMenuItem(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.orderHistoryPage);
+                                      },
                                       title: 'Order History',
                                       icon: Icons.access_time,
                                     ),
@@ -175,19 +180,30 @@ class ProfilePage extends StatelessWidget {
                                       icon: Icons.phone_outlined,
                                     ),
                                     menuSpacing,
-                                    AccountMenuItem(
+                                    AccountMenuItem
+                                      (
                                         onTap: () {},
                                         title: 'Help & FAQs',
                                         icon: Icons.help_center_outlined),
                                     menuSpacing,
                                     AccountMenuItem(
                                       onTap: () {
-                                        Get.find<AuthStatusController>()
-                                            .logout();
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                            ConfirmationDialogBox(
+                                              text: "Are you sure you want to logout",
+                                              onPressed: () {
+                                                Get.find<AuthStatusController>().logout();
+
+                                              },
+                                            ));
+
                                       },
                                       title: 'Logout',
                                       icon: Icons.logout,
                                     ),
+
                                   ],
                                 );
                               }),

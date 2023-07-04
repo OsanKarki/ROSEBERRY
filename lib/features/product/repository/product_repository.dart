@@ -2,25 +2,19 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/core/data/remote/api_client.dart';
+import 'package:ecommerce_app/core/data/remote/api_constants.dart';
 import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:ecommerce_app/features/product/model/product_model.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:get/get.dart';
 
 class ProductRepository {
-  Future<Either<NetworkException, List<ProductModel>>> getTopRatedProduct() async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
+  Future<Either<NetworkException, List<ProductModel>>>
+      getTopRatedProduct(FilterQueryParams filterQueryParams) async {
     try {
-      final response = await dio.get(
-          "/rest/V1/custom/products?topRated=true&searchCriteria[pageSize]=10&searchCriteria[currentPage]=1");
+      final data =
+          await Get.find<ApiClient>().get(ApiConstants.products,queryParams: filterQueryParams.toJson());
 
-      // final data = jsonDecode(fixture("image_slider_list.json"));
-
-      final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
       final productList = data[0]['items'];
 
       final productModelList = productList.map<ProductModel>((productJson) {
@@ -38,20 +32,12 @@ class ProductRepository {
   }
 
   Future<Either<NetworkException, List<ProductModel>>>
-      getBestSellerProduct() async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
+      getBestSellerProduct(FilterQueryParams filterQueryParams) async {
     try {
-      final response = await dio.get(
-          "/rest/V1/custom/products?bestSeller=true&searchCriteria[pageSize]=10&searchCriteria[currentPage]=1");
+      final data =
+          await Get.find<ApiClient>().get(ApiConstants.products,queryParams: filterQueryParams.toJson());
 
-      // final data = jsonDecode(fixture("image_slider_list.json"));
 
-      final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
       final productList = data[0]['items'];
 
       final productModelList = productList.map<ProductModel>((productJson) {
@@ -69,20 +55,11 @@ class ProductRepository {
   }
 
   Future<Either<NetworkException, List<ProductModel>>>
-      getTopDealsProduct() async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-
-    dio.options.baseUrl = "https://qmbmart.store";
-
+      getTopDealsProduct(FilterQueryParams filterQueryParams) async {
     try {
-      final response = await dio.get(
-          "/rest/V1/custom/products?searchCriteria[pageSize]=10&topDeals=true&searchCriteria[currentPage]=1");
+      final data =
+          await Get.find<ApiClient>().get(ApiConstants.products,queryParams: FilterQueryParams().toJson());
 
-      // final data = jsonDecode(fixture("image_slider_list.json"));
-
-      final data = response.data;
-      // final data = jsonDecode(fixture("image_slider_list.json"));
       final productList = data[0]['items'];
 
       final productModelList = productList.map<ProductModel>((productJson) {
@@ -100,16 +77,12 @@ class ProductRepository {
   }
 
   Future<Either<NetworkException, ProductModel>> getProductDetails(
-      {required FilterQueryParams filterQueryParams}) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
+      String sku) async {
 
-    dio.options.baseUrl = "https://qmbmart.store";
 
     try {
-      final response = await dio.get("/rest/V1/product",queryParameters: filterQueryParams.toJson());
+      final data = await  Get.find<ApiClient>().get("${ApiConstants.getProductDetails}?sku=$sku");
 
-      final data = response.data;
 
       final productJson = data[0];
       final productModel = ProductModel.fromJson(productJson);
@@ -126,16 +99,12 @@ class ProductRepository {
 
   Future<Either<NetworkException, List<ProductModel>>> getProductList(
       {required FilterQueryParams filterQueryParams}) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
 
-    dio.options.baseUrl = "https://qmbmart.store";
 
     try {
-      final response = await dio.get("/rest/V1/custom/products",
-          queryParameters: filterQueryParams.toJson());
+      final data = await  Get.find<ApiClient>().get(ApiConstants.products,
+          queryParams: filterQueryParams.toJson());
 
-      final data = response.data;
 
       final productList = data[0]['items'];
 

@@ -4,13 +4,10 @@ import 'package:ecommerce_app/features/home/view/widgets/shimmer/primary_box_shi
 import 'package:ecommerce_app/features/product/controller/product_top_deals_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../../core/presentation/routes/routes.dart';
 import '../../../../core/widgets/error_view.dart';
-import '../../../product/controller/product_top_rated_controller.dart';
 import '../../../product/model/filter_query_params.dart';
 import '../../../product/view/widgets/product_card.dart';
 class HomeTopDealsItems extends StatelessWidget {
@@ -32,7 +29,7 @@ class HomeTopDealsItems extends StatelessWidget {
               children: [
                  Text(
                   'Top Deals',
-                  style: Theme.of(context).textTheme.titleMedium?.apply(color: Colors.white,),
+                  style: Theme.of(context).textTheme.bodyLarge?.apply(color: Colors.white,),
                 ),
                 TextButton(
                     onPressed: () {

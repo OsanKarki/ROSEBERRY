@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/core/presentation/resources/app_colors.dart';
 import 'package:ecommerce_app/core/presentation/routes/routes.dart';
 import 'package:ecommerce_app/core/widgets/primary_button.dart';
-import 'package:ecommerce_app/features/bnb/view/bnb_controller.dart';
+import 'package:ecommerce_app/features/bnb/view/controller/bnb_controller.dart';
 import 'package:ecommerce_app/features/cart/view/controller/add_cart_controller.dart';
 import 'package:ecommerce_app/features/product/controller/product_details_controller.dart';
 import 'package:flutter/material.dart';
@@ -54,73 +54,90 @@ class _ProductDetailsState extends State<ProductDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 30),
+                                  padding: const EdgeInsets.only(top: 45),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       GestureDetector(
-                                        onTap: (){
+                                        onTap: () {
                                           Get.back();
                                         },
                                         child: CircleAvatar(
-                                          child: Icon(Icons.arrow_back_ios_new,color: kGreen600,),
+                                          child: Icon(
+                                            Icons.arrow_back_ios_new,
+                                            color: kGreen600,
+                                          ),
                                           backgroundColor: Colors.grey.shade400,
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: (){
-                                          Get.until((route) => route.settings.name==AppRoutes.bottomNavigationBar);
+                                        onTap: () {
+                                          Get.until((route) =>
+                                              route.settings.name ==
+                                              AppRoutes.bottomNavigationBar);
                                           Get.find<BnbController>().index = 2;
                                         },
                                         child: CircleAvatar(
-                                        child:  Stack(
-                                          children: [
-                                            Icon(Icons.shopping_cart_outlined,color: kGreen600,),
-                                            Positioned(
-                                              bottom: 0,
-                                              right: 0,
-                                              child: CircleAvatar(
-                                                  backgroundColor: Colors.red,
-                                                  radius: 7,
-                                                  child: GetBuilder<GetCartController>(
-                                                    builder: (controller) {
-                                                      final result = controller.result;
-                                                      if (result != null) {
-                                                        return result.fold((l) => ErrorView(l.value), (cartDetails) {
-                                                          if (cartDetails.cartItemsModel != null &&
-                                                              cartDetails.cartItemsModel!.isNotEmpty) {
-                                                            return  Text(
-                                                              "${cartDetails.itemCount}",
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodySmall
-                                                                  ?.copyWith(
-                                                                fontSize: 10,
-                                                                color: Colors.white,
-
-                                                              ),
-                                                            );
-                                                          } else {
-                                                            return SizedBox.shrink();
-                                                          }
-                                                        });
-                                                      } else {
-                                                        return Shimmer(
-                                                            child: Container(
-                                                              height: 100,
-                                                            ));
-                                                      }
-                                                    },
-                                                  )
+                                          child: Stack(
+                                            children: [
+                                              Icon(
+                                                Icons.shopping_cart_outlined,
+                                                color: kGreen600,
                                               ),
-                                            ),
-                                          ],
-                                        ),
+                                              GetBuilder<GetCartController>(
+                                                builder: (controller) {
+                                                  final result =
+                                                      controller.result;
+                                                  if (result != null) {
+                                                    return result.fold(
+                                                        (l) =>
+                                                            SizedBox.shrink(),
+                                                        (cartDetails) {
+                                                      if (cartDetails
+                                                                  .cartItemsModel !=
+                                                              null &&
+                                                          cartDetails
+                                                              .cartItemsModel!
+                                                              .isNotEmpty) {
+                                                        return Positioned(
+                                                            bottom: 0,
+                                                            right: 0,
+                                                            child: CircleAvatar(
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                                radius: 7,
+                                                                child: Text(
+                                                                  "${cartDetails.itemCount}",
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodySmall
+                                                                      ?.copyWith(
+                                                                        fontSize:
+                                                                            10,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                )));
+                                                      } else {
+                                                        return SizedBox
+                                                            .shrink();
+                                                      }
+                                                    });
+                                                  } else {
+                                                    return Shimmer(
+                                                        child: Container(
+                                                      height: 100,
+                                                    ));
+                                                  }
+                                                },
+                                              )
+                                            ],
+                                          ),
                                           backgroundColor: Colors.grey.shade400,
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -130,7 +147,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     child: Image.network(
                                       "${product.image}",
                                       fit: BoxFit.cover,
-                                      width: 300,
                                       height: 300,
                                     ),
                                   ),
@@ -141,7 +157,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   child: Text("${product.description}",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline6),
+                                          .titleMedium),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -152,17 +168,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         Text("AVAILABILITY:",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .titleMedium),
-                                        Text(
-                                          " ${product.availability}",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: product.availability ==
-                                                      "IN STOCK"
-                                                  ? Colors.blue
-                                                  : Colors.redAccent,
-                                              fontWeight: FontWeight.w600),
-                                        ),
+                                                .bodySmall),
+                                        Text(" ${product.availability}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                ?.copyWith(
+                                                  color: product.availability ==
+                                                          "IN STOCK"
+                                                      ? Colors.blue
+                                                      : Colors.redAccent,
+                                                )),
                                       ],
                                     ),
                                     Row(
@@ -170,11 +186,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         Text('SKU',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .titleMedium),
+                                                .bodyMedium),
                                         Text(":${product.sku}",
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.green)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color: kGreen600
+                                                )),
                                       ],
                                     ),
                                   ],
@@ -184,18 +203,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       const EdgeInsets.symmetric(vertical: 30),
                                   child: Row(
                                     children: [
-                                      const Text(
+                                       Text(
                                         "Rs:",
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w700),
+                                        style:  Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
                                       ),
                                       Text(
                                         "${double.parse("${product.price}")}",
-                                        style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.green),
+                                        style:  Theme.of(context)
+                                            .textTheme
+                                            .titleLarge?.copyWith(color: Colors.orange)
                                       ),
                                     ],
                                   ),
@@ -212,7 +230,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               text: 'Add to Cart',
                               onPressed: () {
                                 if (product.availability == "IN STOCK") {
-                                  bool isAuthenticated = _authStatusController.isAuthenticated.value;
+                                  bool isAuthenticated = _authStatusController
+                                      .isAuthenticated.value;
                                   if (isAuthenticated) {
                                     Get.find<CartController>().cartAdd(
                                         context,

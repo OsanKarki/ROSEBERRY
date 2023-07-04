@@ -15,8 +15,8 @@ class ProductDetailsController extends GetxController {
 
   Either<NetworkException,ProductModel>? result;
 
-  Future<void> getProductInfo(FilterQueryParams filterQueryParams) async {
-    result = await ProductRepository().getProductDetails(filterQueryParams: filterQueryParams);
+  Future<void> getProductInfo(String sku) async {
+    result = await ProductRepository().getProductDetails(sku);
 
     update();
   }

@@ -26,20 +26,20 @@ class AccountMenuItem extends StatelessWidget {
               Icon(
                 icon,
                 color: Colors.grey,
-                size: 30,
+                size: 20,
               ),
               SizedBox(
                 width: 20,
               ),
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.apply(color: kGreen600,),
+                style: Theme.of(context).textTheme.bodySmall?.apply(color: kGreen600,),
               )
             ],
           ),
           Icon(
             Icons.arrow_forward_ios,
-            size: 17,
+            size: 13,
             color: Colors.grey,
           )
         ],

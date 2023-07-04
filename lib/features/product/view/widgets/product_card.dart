@@ -18,21 +18,21 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(AppRoutes.productDetails, arguments: FilterQueryParams(sku: product.sku));
+          Get.toNamed(AppRoutes.productDetails, arguments: product.sku);
         },
         child: Column(
           children: [
             SizedBox(
               height: 90,
-              width: 110,
+              width: 100,
               child: Image.network("${product.image}", fit: BoxFit.fill),
             ),
             const SizedBox(
               height: 5,
             ),
             Container(
-              height: 20,
-              width: 110,
+              height: 15,
+              width: 100,
               decoration: BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.circular(20),
@@ -42,7 +42,7 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   textAlign: TextAlign.center,
                   "${product.description}",
-                  style:  Theme.of(context).textTheme.bodyLarge?.apply(color: Colors.white,)
+                  style:  Theme.of(context).textTheme.bodySmall?.apply(color: Colors.white,)
                 ),
               ),
             ),

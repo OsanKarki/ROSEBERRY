@@ -49,6 +49,14 @@ dependencies:
   #Approximate how your Flutter app looks and performs on another device.
   device_preview: ^1.1.0
 
+  #Photo View provides a gesture sensitive zoomable widget. Photo View is largely used to show interactive images and other stuff such as SVG.
+  photo_view: ^0.14.0
+  url_launcher: ^6.1.11
+
+
+  #A Flutter plugin that provides a WebView widget on Android and iOS.
+  webview_flutter: ^4.2.2
+
 
 
 
