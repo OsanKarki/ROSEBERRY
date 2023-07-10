@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/features/product/model/filter_query_params.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/presentation/routes/routes.dart';

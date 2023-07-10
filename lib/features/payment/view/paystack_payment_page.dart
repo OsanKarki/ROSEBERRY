@@ -33,21 +33,25 @@ class _PayStackPaymentPage extends State<PayStackPaymentPage> {
       appBar: AppBar(
         backgroundColor: kGreen600,
         automaticallyImplyLeading: false,
-        actions: [Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: (){
-              Get.until((route) =>route.settings.name==AppRoutes.bottomNavigationBar,
-              );
-              _showSuccessDialog();
-
-            },
-              child: Icon(Icons.clear)),
-        )],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+                onTap: () {
+                  Get.until(
+                    (route) =>
+                        route.settings.name == AppRoutes.bottomNavigationBar,
+                  );
+                  _showSuccessDialog();
+                },
+                child: Icon(Icons.clear)),
+          )
+        ],
       ),
       body: SafeArea(child: WebViewWidget(controller: controller)),
     );
   }
+
   void _showSuccessDialog() {
     showDialog(
       context: context,
@@ -68,5 +72,3 @@ class _PayStackPaymentPage extends State<PayStackPaymentPage> {
     );
   }
 }
-
-

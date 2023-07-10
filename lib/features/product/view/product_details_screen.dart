@@ -50,175 +50,177 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 45),
-                                  child: Row(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 45),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.back();
+                                          },
+                                          child: CircleAvatar(
+                                            child: Icon(
+                                              Icons.arrow_back_ios_new,
+                                              color: kGreen600,
+                                            ),
+                                            backgroundColor:
+                                                Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.until((route) =>
+                                                route.settings.name ==
+                                                AppRoutes.bottomNavigationBar);
+                                            Get.find<BnbController>().index = 2;
+                                          },
+                                          child: CircleAvatar(
+                                            child: Stack(
+                                              children: [
+                                                Icon(
+                                                  Icons.shopping_cart_outlined,
+                                                  color: kGreen600,
+                                                ),
+                                                GetBuilder<GetCartController>(
+                                                  builder: (controller) {
+                                                    final result =
+                                                        controller.result;
+                                                    if (result != null) {
+                                                      return result.fold(
+                                                          (l) =>
+                                                              SizedBox.shrink(),
+                                                          (cartDetails) {
+                                                        if (cartDetails
+                                                                    .cartItemsModel !=
+                                                                null &&
+                                                            cartDetails
+                                                                .cartItemsModel!
+                                                                .isNotEmpty) {
+                                                          return Positioned(
+                                                              bottom: 0,
+                                                              right: 0,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .red,
+                                                                      radius: 7,
+                                                                      child:
+                                                                          Text(
+                                                                        "${cartDetails.itemCount}",
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall
+                                                                            ?.copyWith(
+                                                                              fontSize: 10,
+                                                                              color: Colors.white,
+                                                                            ),
+                                                                      )));
+                                                        } else {
+                                                          return SizedBox
+                                                              .shrink();
+                                                        }
+                                                      });
+                                                    } else {
+                                                      return Shimmer(
+                                                          child: Container(
+                                                        height: 100,
+                                                      ));
+                                                    }
+                                                  },
+                                                )
+                                              ],
+                                            ),
+                                            backgroundColor:
+                                                Colors.grey.shade400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 40),
+                                    child: Center(
+                                      child: Image.network(
+                                        "${product.image}",
+                                        fit: BoxFit.cover,
+                                        height: 300,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 30),
+                                    child: Text("${product.description}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
+                                  ),
+                                  Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.back();
-                                        },
-                                        child: CircleAvatar(
-                                          child: Icon(
-                                            Icons.arrow_back_ios_new,
-                                            color: kGreen600,
-                                          ),
-                                          backgroundColor: Colors.grey.shade400,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text("AVAILABILITY:",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall),
+                                          Text(" ${product.availability}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall
+                                                  ?.copyWith(
+                                                    color:
+                                                        product.availability ==
+                                                                "IN STOCK"
+                                                            ? Colors.blue
+                                                            : Colors.redAccent,
+                                                  )),
+                                        ],
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.until((route) =>
-                                              route.settings.name ==
-                                              AppRoutes.bottomNavigationBar);
-                                          Get.find<BnbController>().index = 2;
-                                        },
-                                        child: CircleAvatar(
-                                          child: Stack(
-                                            children: [
-                                              Icon(
-                                                Icons.shopping_cart_outlined,
-                                                color: kGreen600,
-                                              ),
-                                              GetBuilder<GetCartController>(
-                                                builder: (controller) {
-                                                  final result =
-                                                      controller.result;
-                                                  if (result != null) {
-                                                    return result.fold(
-                                                        (l) =>
-                                                            SizedBox.shrink(),
-                                                        (cartDetails) {
-                                                      if (cartDetails
-                                                                  .cartItemsModel !=
-                                                              null &&
-                                                          cartDetails
-                                                              .cartItemsModel!
-                                                              .isNotEmpty) {
-                                                        return Positioned(
-                                                            bottom: 0,
-                                                            right: 0,
-                                                            child: CircleAvatar(
-                                                                backgroundColor:
-                                                                    Colors.red,
-                                                                radius: 7,
-                                                                child: Text(
-                                                                  "${cartDetails.itemCount}",
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodySmall
-                                                                      ?.copyWith(
-                                                                        fontSize:
-                                                                            10,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                )));
-                                                      } else {
-                                                        return SizedBox
-                                                            .shrink();
-                                                      }
-                                                    });
-                                                  } else {
-                                                    return Shimmer(
-                                                        child: Container(
-                                                      height: 100,
-                                                    ));
-                                                  }
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.grey.shade400,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text('SKU',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium),
+                                          Text(":${product.sku}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(color: kGreen600)),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 40),
-                                  child: Center(
-                                    child: Image.network(
-                                      "${product.image}",
-                                      fit: BoxFit.cover,
-                                      height: 300,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 30),
-                                  child: Text("${product.description}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 30),
+                                    child: Row(
                                       children: [
-                                        Text("AVAILABILITY:",
+                                        Text("Rs:",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodySmall),
-                                        Text(" ${product.availability}",
+                                                .titleLarge),
+                                        Text(
+                                            "${double.parse("${product.price}")}",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodySmall
+                                                .titleLarge
                                                 ?.copyWith(
-                                                  color: product.availability ==
-                                                          "IN STOCK"
-                                                      ? Colors.blue
-                                                      : Colors.redAccent,
-                                                )),
+                                                    color: Colors.orange)),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text('SKU',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium),
-                                        Text(":${product.sku}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  color: kGreen600
-                                                )),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 30),
-                                  child: Row(
-                                    children: [
-                                       Text(
-                                        "Rs:",
-                                        style:  Theme.of(context)
-                                            .textTheme
-                                            .titleLarge
-                                      ),
-                                      Text(
-                                        "${double.parse("${product.price}")}",
-                                        style:  Theme.of(context)
-                                            .textTheme
-                                            .titleLarge?.copyWith(color: Colors.orange)
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Positioned(

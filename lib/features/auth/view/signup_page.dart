@@ -21,12 +21,13 @@ class _SignupPageState extends State<SignupPage> {
   final passwordController = TextEditingController();
   final phoneNumberController = TextEditingController();
 
-  late  GlobalKey<FormState> formKey;
+  late GlobalKey<FormState> formKey;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    formKey= GlobalKey<FormState>();
+    formKey = GlobalKey<FormState>();
   }
 
   @override
@@ -72,10 +73,9 @@ class _SignupPageState extends State<SignupPage> {
                       children: [
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              return null;//no mistake -> all good
-
-                            }else {
+                            if (value != null && value.isNotEmpty) {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
@@ -86,10 +86,9 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              return null;//no mistake -> all good
-
-                            }else {
+                            if (value != null && value.isNotEmpty) {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
@@ -100,10 +99,9 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              return null;//no mistake -> all good
-
-                            }else {
+                            if (value != null && value.isNotEmpty) {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
@@ -114,10 +112,9 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              return null;//no mistake -> all good
-
-                            }else {
+                            if (value != null && value.isNotEmpty) {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
@@ -129,17 +126,15 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              if(value!=passwordController.text){
+                            if (value != null && value.isNotEmpty) {
+                              if (value != passwordController.text) {
                                 return "Password and confirm password must be same";
                               }
-                              return null;//no mistake -> all good
-
-                            }else {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
-
                           prefixIcon: Icons.vpn_key,
                           label: 'Confirm Password',
                           isPassword: true,
@@ -147,10 +142,9 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         PrimaryTextField(
                           validator: (value) {
-                            if(value!=null && value.isNotEmpty){
-                              return null;//no mistake -> all good
-
-                            }else {
+                            if (value != null && value.isNotEmpty) {
+                              return null; //no mistake -> all good
+                            } else {
                               return "This field is required";
                             }
                           },
@@ -166,18 +160,16 @@ class _SignupPageState extends State<SignupPage> {
                           text: 'CREATE AN ACCOUNT',
                           borderRadius: 20,
                           onPressed: () {
-                           if(formKey.currentState?.validate()==true){
-                             Get.find<SignupController>()
-                                 .signupRegister(context,SignupRequestModel(
-                                 firstName: firstNameController.text,
-                                 lastName: lastNameController.text,
-                                 email: emailController.text,
-                                 password: passwordController.text,
-                                 phoneNumber: phoneNumberController.text
-
-                             ));
-                           }
-
+                            if (formKey.currentState?.validate() == true) {
+                              Get.find<SignupController>().signupRegister(
+                                  context,
+                                  SignupRequestModel(
+                                      firstName: firstNameController.text,
+                                      lastName: lastNameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      phoneNumber: phoneNumberController.text));
+                            }
                           },
                         ),
                         const SizedBox(

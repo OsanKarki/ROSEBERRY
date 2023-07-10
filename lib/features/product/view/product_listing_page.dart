@@ -36,97 +36,98 @@ class _ProductListingPageState extends State<ProductListingPage> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: kGreen600,
-        flexibleSpace: Padding(
-          padding: const EdgeInsets.only(top: 30,left: 50),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed(AppRoutes.productSearchPage);
-                },
-                child: Container(
-                  height: 43,
-                  width: 300,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          color: Colors.grey.shade700,
-                          size: 15,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Search products',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: Colors.grey),
-                        )
-                      ],
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.only(top: 30, left: 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.productSearchPage);
+                  },
+                  child: Container(
+                    height: 43,
+                    width: 300,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.search,
+                            color: Colors.grey.shade700,
+                            size: 15,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Search products',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // SizedBox(width: 10,),
-              GestureDetector(
-                onTap: () {
-                  Get.until((route) => route.settings.name==AppRoutes.bottomNavigationBar);
-                  Get.find<BnbController>().index = 2;
-                },
-                child: Stack(
-                  children: [
-                    Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 25,
-                      color: Colors.white,
-                    ),
-                    GetBuilder<GetCartController>(
-                      builder: (controller) {
-                        final result = controller.result;
-                        if (result != null) {
-                          return result.fold((l) => SizedBox.shrink(),
-                                  (cartDetails) {
-                                if (cartDetails.cartItemsModel != null &&
-                                    cartDetails.cartItemsModel!.isNotEmpty) {
-                                  return Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: CircleAvatar(
-                                          backgroundColor: Colors.red,
-                                          radius: 7,
-                                          child: Text(
-                                            "${cartDetails.itemCount}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall
-                                                ?.copyWith(
-                                              fontSize: 10,
-                                              color: Colors.white,
-                                            ),
-                                          )));
-                                } else {
-                                  return SizedBox.shrink();
-                                }
-                              });
-                        } else {
-                          return SizedBox.shrink();
-                        }
-                      },
-                    )
-                  ],
+                // SizedBox(width: 10,),
+                GestureDetector(
+                  onTap: () {
+                    Get.until((route) =>
+                        route.settings.name == AppRoutes.bottomNavigationBar);
+                    Get.find<BnbController>().index = 2;
+                  },
+                  child: Stack(
+                    children: [
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 25,
+                        color: Colors.white,
+                      ),
+                      GetBuilder<GetCartController>(
+                        builder: (controller) {
+                          final result = controller.result;
+                          if (result != null) {
+                            return result.fold((l) => SizedBox.shrink(),
+                                (cartDetails) {
+                              if (cartDetails.cartItemsModel != null &&
+                                  cartDetails.cartItemsModel!.isNotEmpty) {
+                                return Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        radius: 7,
+                                        child: Text(
+                                          "${cartDetails.itemCount}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                fontSize: 10,
+                                                color: Colors.white,
+                                              ),
+                                        )));
+                              } else {
+                                return SizedBox.shrink();
+                              }
+                            });
+                          } else {
+                            return SizedBox.shrink();
+                          }
+                        },
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         ),
         backgroundColor: Colors.grey.shade200,
         body: GetBuilder<ProductListingController>(
